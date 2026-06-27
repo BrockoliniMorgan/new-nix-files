@@ -44,7 +44,7 @@
       } {
         _args = [
           (lua "mod .. \" + S\"")
-          (lua "hl.dsp.exec_cmd(\"${lib.getExe pkgs.palemoon-bin}\")")
+          (lua "hl.dsp.exec_cmd(\"${lib.getExe pkgs.qutebrowser}\")")
         ];
       }];
       on = {

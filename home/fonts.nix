@@ -2,9 +2,9 @@
 {
   programs.alacritty.settings.font = {
     normal = {
-      family = "Terminess Nerd Font";
+      family = "MartianMono Nerd Font";
       style = "Mono";
     };
-    size = 12;
+    size = 11;
   };
 }

@@ -2,14 +2,9 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, hostName, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
-
   # Use the systemd-boot EFI boot loader.
   boot.loader = {
     systemd-boot.enable = false;
@@ -24,7 +19,7 @@
     };
   };
 
-  networking.hostName = "brock-vivobook"; # Define your hostname.
+  networking.hostName = hostName; # Define your hostname.
 
   # Configure network connections interactively with nmcli or nmtui.
   networking.networkmanager.enable = true;
@@ -44,21 +39,18 @@
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
 
-  # Enable the X11 windowing system.
-  # services.xserver.enable = true;
   services.displayManager.ly.enable = true;
   programs.hyprland.enable = true;
+  programs.steam.enable = true;
+  programs.ssh.startAgent = true;
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
 
   # Enable CUPS to print documents.
-  # services.printing.enable = true;
+  services.printing.enable = true;
 
-  # Enable sound.
-  # services.pulseaudio.enable = true;
-  # OR
   services.pipewire = {
     enable = true;
     pulse.enable = true;
@@ -74,8 +66,7 @@
     hashedPasswordFile = "/persistent/passwords/user";
   };
 
-  programs.firefox.enable = true;
-  fonts.packages = [ pkgs.nerd-fonts.terminess-ttf ];
+  fonts.packages = [ pkgs.nerd-fonts.martian-mono];
   security.sudo.extraConfig = ''
     Defaults lecture = never
   '';
@@ -83,7 +74,7 @@
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    vim
     wget
   ];
 

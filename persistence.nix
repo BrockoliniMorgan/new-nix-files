@@ -48,7 +48,10 @@
       "/etc/machine-id"
     ];
     users.brock = {
-      directories = ["new-nix-files"];
+      directories = [
+        "new-nix-files" 
+        ".ssh"
+      ];
     };
   };
 }
