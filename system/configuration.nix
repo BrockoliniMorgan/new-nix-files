@@ -5,17 +5,19 @@
 { config, lib, pkgs, hostName, ... }:
 
 {
-  # Use the systemd-boot EFI boot loader.
-  boot.loader = {
-    systemd-boot.enable = false;
-    grub = {
-      enable = true;
-      efiSupport = true;
-      device = "nodev";
-    };
-    efi = {
-      canTouchEfiVariables = true;
-      efiSysMountPoint = "/boot";
+  boot = {
+    kernelPackages = pkgs.linuxPackages_latest;
+    loader = {
+      systemd-boot.enable = false;
+      grub = {
+        enable = true;
+        efiSupport = true;
+        device = "nodev";
+      };
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot";
+      };
     };
   };
 
@@ -26,10 +28,6 @@
 
   # Set your time zone.
   time.timeZone = "Australia/Brisbane";
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -62,7 +60,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.brock = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "dialout" "networkmanager" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "dialout" "networkmanager" ];
     hashedPasswordFile = "/persistent/passwords/user";
   };
 
@@ -71,9 +69,9 @@
     Defaults lecture = never
   '';
 
-  # List packages installed in system profile.
-  # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
+    mako
+    tree
     vim
     wget
   ];

@@ -51,6 +51,8 @@
       directories = [
         "new-nix-files" 
         ".ssh"
+        "Projects"
+        ".config/vesktop"
       ];
     };
   };

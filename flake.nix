@@ -50,10 +50,9 @@
           }
           disko.nixosModules.disko
           impermanence.nixosModules.impermanence
-          ./hardware
-          ./configuration.nix
-          ./persistence.nix
           home-manager.nixosModules.home-manager
+          ./hardware
+          ./system
           (
             { specialArgs, ... }:
             {

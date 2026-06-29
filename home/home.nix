@@ -38,6 +38,11 @@
         ];
       } {
         _args = [
+          (lua "mod .. \" + D\"")
+          (lua "hl.dsp.exec_cmd(\"${lib.getExe pkgs.rofi}\")")
+        ];
+      } {
+        _args = [
           (lua "mod .. \" + RETURN\"")
           (lua "hl.dsp.exec_cmd(\"${lib.getExe pkgs.alacritty}\")")
         ];
@@ -58,6 +63,8 @@
         ];
       };
     };
+    # Just using this for functions - can do it in nix, but 
+    # it's cleaner when looking at the actual lua config file
     extraConfig = ''
       for i = 1, 12 do
         local key = i + 9
@@ -101,11 +108,16 @@
       };
     };
   };
-  programs.btop.enable = true;
   programs.alacritty.enable = true;
   programs.alacritty.settings.terminal.osc52 = "CopyPaste";
   programs.bash.enable = true;
+  programs.btop.enable = true;
   programs.home-manager.enable = true;
+  programs.qutebrowser = {
+    enable = true;
+    # Fix "unsupported browser" google login issues
+    perDomainSettings."https://accounts.google.com/*".content.headers.user_agent = "Mozilla/5.0 ({os_info}; rv:135.0) Gecko/20100101 Firefox/135";
+  };
   programs.rofi.enable = true;
   programs.git = {
     enable = true;
@@ -130,5 +142,8 @@
     username = "brock";
     homeDirectory = "/home/brock";
     stateVersion = "26.05";
+    packages = with pkgs; [
+      vesktop
+    ];
   };
 }
