@@ -2,7 +2,7 @@
 {
   imports = [
     ./home.nix
-    ./fonts.nix
+    ./theme
     inputs.nvf.homeManagerModules.nvf
   ];
 }

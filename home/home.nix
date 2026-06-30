@@ -35,7 +35,7 @@
       } {
         _args = [
           (lua "mod .. \" + D\"")
-          (lua "hl.dsp.exec_cmd(\"${lib.getExe pkgs.rofi}\")")
+          (lua "hl.dsp.exec_cmd(\"${lib.getExe pkgs.rofi} -show drun\")")
         ];
       } {
         _args = [
