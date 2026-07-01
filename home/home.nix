@@ -106,6 +106,16 @@
   programs.alacritty.settings.terminal.osc52 = "CopyPaste";
   programs.bash.enable = true;
   programs.btop.enable = true;
+  programs.btop.settings = {
+    disable_mouse = true;
+    proc_aggregate = true;
+    proc_gradient = false;
+    proc_per_core = true;
+    proc_tree = true;
+    swap_disk = false;
+    update_ms = 100;
+    vim_keys = true;
+  };
   programs.home-manager.enable = true;
   programs.qutebrowser = {
     enable = true;
@@ -130,7 +140,7 @@
     shell.enableShellIntegration = true;
     shellAliases = {
       nrsf = "sudo nixos-rebuild switch --flake ~/new-nix-files";
-      hmsf = "${pkgs.home-manager}/bin/home-manager switch --flake ~/new-nix-files";
+      hmsf = "${pkgs.home-manager}/bin/home-manager switch --flake ~/new-nix-files -b bkp";
       ngc = "sudo nix-collect-garbage -d && nix-collect-garbage -d";
     };
     username = "brock";

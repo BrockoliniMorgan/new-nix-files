@@ -65,9 +65,16 @@
   };
 
   fonts.packages = [ pkgs.nerd-fonts.martian-mono];
+
   security.sudo.extraConfig = ''
     Defaults lecture = never
   '';
+  security.wrappers.btop = {
+    source = "${lib.getExe pkgs.btop}";
+    capabilities = "cap_perfmon=+ep cap_dac_read_search=+ep";
+    owner = "root";
+    group = "root";
+  };
 
   environment.systemPackages = with pkgs; [
     mako
