@@ -1,7 +1,6 @@
-{ hostName, ... }:
 {
   imports = [
     ./disko.nix
-    ./${hostName}
+    ./hardware-configuration.nix
   ];
 }
