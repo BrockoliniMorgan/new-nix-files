@@ -22,11 +22,11 @@
         done
         btrfs subvolume delete "$1"
       }
-      
+
       for i in $(find /btrfs_tmp/old_roots/ --maxdepth 1 -mtime +30); do
         delete_subvolume_recursively "$i"
       done
-      
+
       btrfs subvolume create /btrfs_tmp/root
       umount /btrfs_tmp
       rm -rf /btrfs_tmp
@@ -49,7 +49,7 @@
     ];
     users.brock = {
       directories = [
-        "new-nix-files" 
+        "new-nix-files"
         ".ssh"
         "Projects"
         ".config/vesktop"

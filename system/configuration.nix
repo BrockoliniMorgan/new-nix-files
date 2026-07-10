@@ -2,7 +2,13 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, hostName, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  hostName,
+  ...
+}:
 
 {
   boot = {
@@ -60,11 +66,15 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.brock = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "dialout" "networkmanager" ];
+    extraGroups = [
+      "wheel"
+      "dialout"
+      "networkmanager"
+    ];
     hashedPasswordFile = "/persistent/passwords/user";
   };
 
-  fonts.packages = [ pkgs.nerd-fonts.martian-mono];
+  fonts.packages = [ pkgs.nerd-fonts.martian-mono ];
 
   security.sudo.extraConfig = ''
     Defaults lecture = never
@@ -85,7 +95,10 @@
 
   nix.settings = {
     auto-optimise-store = true;
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     warn-dirty = false;
   };
 
@@ -133,4 +146,3 @@
   system.stateVersion = "26.05"; # Did you read the comment?
 
 }
-

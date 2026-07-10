@@ -1,7 +1,7 @@
 { ... }:
 {
-  imports = [ 
-    ./hardware-configuration.nix 
-    ./disko.nix 
+  imports = [
+    ./hardware-configuration.nix
+    ./disko.nix
   ];
 }

@@ -1,63 +1,70 @@
-{ lib, pkgs, ...}:
+{ lib, pkgs, ... }:
 {
   wayland.windowManager.hyprland = {
     enable = true;
-    settings = let 
-      lua = lib.generators.mkLuaInline;
-    in {
-      mod._var = "SUPER";
-      monitor = {
-        output = "";
-        mode = "preferred";
-        position = "auto";
-        scale = "1";
-      };
-      config = {
-        input = {
-          repeat_rate = 40;
-          repeat_delay = 250;
+    settings =
+      let
+        lua = lib.generators.mkLuaInline;
+      in
+      {
+        mod._var = "SUPER";
+        monitor = {
+          output = "";
+          mode = "preferred";
+          position = "auto";
+          scale = "1";
         };
-        ecosystem.no_update_news = true;
-        general = {
-          gaps_in = 0;
-          gaps_out = 0;
-          border_size = 0;
+        config = {
+          input = {
+            repeat_rate = 40;
+            repeat_delay = 250;
+          };
+          ecosystem.no_update_news = true;
+          general = {
+            gaps_in = 0;
+            gaps_out = 0;
+            border_size = 0;
+          };
+          decoration.rounding = 4;
+          animations.enabled = false;
+          input.touchpad.natural_scroll = true;
         };
-        decoration.rounding = 4;
-        animations.enabled = false;
-        input.touchpad.natural_scroll = true;
+        bind = [
+          {
+            _args = [
+              (lua "mod .. \" + Q\"")
+              (lua "hl.dsp.window.close()")
+            ];
+          }
+          {
+            _args = [
+              (lua "mod .. \" + D\"")
+              (lua "hl.dsp.exec_cmd(\"${lib.getExe pkgs.rofi} -show drun\")")
+            ];
+          }
+          {
+            _args = [
+              (lua "mod .. \" + RETURN\"")
+              (lua "hl.dsp.exec_cmd(\"${lib.getExe pkgs.alacritty}\")")
+            ];
+          }
+          {
+            _args = [
+              (lua "mod .. \" + S\"")
+              (lua "hl.dsp.exec_cmd(\"${lib.getExe pkgs.qutebrowser}\")")
+            ];
+          }
+        ];
+        on._args = [
+          "hyprland.start"
+          (lua ''
+            function()
+             hl.exec_cmd("waybar")
+            end
+          '')
+        ];
       };
-      bind = [{
-        _args = [
-          (lua "mod .. \" + Q\"")
-          (lua "hl.dsp.window.close()")
-        ];
-      } {
-        _args = [
-          (lua "mod .. \" + D\"")
-          (lua "hl.dsp.exec_cmd(\"${lib.getExe pkgs.rofi} -show drun\")")
-        ];
-      } {
-        _args = [
-          (lua "mod .. \" + RETURN\"")
-          (lua "hl.dsp.exec_cmd(\"${lib.getExe pkgs.alacritty}\")")
-        ];
-      } {
-        _args = [
-          (lua "mod .. \" + S\"")
-          (lua "hl.dsp.exec_cmd(\"${lib.getExe pkgs.qutebrowser}\")")
-        ];
-      }];
-      on._args = [
-        "hyprland.start"
-        (lua ''
-         function()
-          hl.exec_cmd("waybar")
-         end
-        '')
-      ];
-    };
-    # Just using this for functions - can do it in nix, but 
+    # Just using this for functions - can do it in nix, but
     # it's cleaner when looking at the actual lua config file
     extraConfig = ''
       for i = 1, 12 do
@@ -94,7 +101,14 @@
         layer = "top";
         position = "top";
         modules-left = [ "hyprland/workspaces" ];
-        modules-right = [ "network" "cpu" "memory" "temperature" "battery" "tray" ];
+        modules-right = [
+          "network"
+          "cpu"
+          "memory"
+          "temperature"
+          "battery"
+          "tray"
+        ];
         modules-center = [ "clock" ];
         memory.format = "MEM: {}%";
         cpu.format = "CPU: {usage}%";
@@ -120,7 +134,8 @@
   programs.qutebrowser = {
     enable = true;
     # Fix "unsupported browser" google login issues
-    perDomainSettings."https://accounts.google.com/*".content.headers.user_agent = "Mozilla/5.0 ({os_info}; rv:135.0) Gecko/20100101 Firefox/135";
+    perDomainSettings."https://accounts.google.com/*".content.headers.user_agent =
+      "Mozilla/5.0 ({os_info}; rv:135.0) Gecko/20100101 Firefox/135";
   };
   programs.rofi.enable = true;
   programs.git = {

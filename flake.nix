@@ -13,8 +13,12 @@
       url = "github:nix-community/impermanence";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-	home-manager.follows = "home-manager";
+        home-manager.follows = "home-manager";
       };
+    };
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nvf = {
       url = "github:notashelf/nvf";
@@ -22,72 +26,96 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, impermanence, disko, ... }@inputs: 
-  let
-    inherit (nixpkgs) lib;
-    allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "steam" "steam-unwrapped" ];
-    pkgs-per-system = system: import nixpkgs {
-      inherit system;
-      config.allowUnfreePredicate = allowUnfreePredicate;
-    };
-    systems = [
-      {
-        hostName = "vivobook";
-        system = "x86_64-linux";
-      }
-      {
-        hostName = "thinkpad";
-        system = "x86_64-linux";
-      }
-      {
-        hostName = "desktop";
-        system = "x86_64-linux";
-      }
-    ];
-    createSystem = { hostName, system }: {
-      ${hostName} = lib.nixosSystem {
-        inherit system;
-        modules = [
-          {
-            nixpkgs.config.allowUnfreePredicate = allowUnfreePredicate;
-          }
-          disko.nixosModules.disko
-          impermanence.nixosModules.impermanence
-          home-manager.nixosModules.home-manager
-          ./hardware
-          ./system
-          (
-            { specialArgs, ... }:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      impermanence,
+      disko,
+      treefmt-nix,
+      ...
+    }@inputs:
+    let
+      inherit (nixpkgs) lib;
+      allowUnfreePredicate =
+        pkg:
+        builtins.elem (lib.getName pkg) [
+          "steam"
+          "steam-unwrapped"
+        ];
+      pkgs-per-system =
+        system:
+        import nixpkgs {
+          inherit system;
+          config.allowUnfreePredicate = allowUnfreePredicate;
+        };
+      system = "x86_64-linux";
+      systems = [
+        {
+          hostName = "vivobook";
+          system = "x86_64-linux";
+        }
+        {
+          hostName = "thinkpad";
+          system = "x86_64-linux";
+        }
+        {
+          hostName = "desktop";
+          system = "x86_64-linux";
+        }
+      ];
+      createSystem = { hostName, system }: {
+        ${hostName} = lib.nixosSystem {
+          inherit system;
+          modules = [
             {
-              home-manager = {
-                backupFileExtension = "bkp";
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.brock = ./home;
-                extraSpecialArgs = specialArgs;
-              };
+              nixpkgs.config.allowUnfreePredicate = allowUnfreePredicate;
             }
-          )
-        ];
-        specialArgs = {
-          inherit inputs hostName;
+            disko.nixosModules.disko
+            impermanence.nixosModules.impermanence
+            home-manager.nixosModules.home-manager
+            ./hardware
+            ./system
+            (
+              { specialArgs, ... }:
+              {
+                home-manager = {
+                  backupFileExtension = "bkp";
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  users.brock = ./home;
+                  extraSpecialArgs = specialArgs;
+                };
+              }
+            )
+          ];
+          specialArgs = {
+            inherit inputs hostName;
+          };
         };
       };
-    };
-    createHome = { hostName, system }: {
-      "brock@${hostName}" = home-manager.lib.homeManagerConfiguration {
-        pkgs = pkgs-per-system system;
-        modules = [
-          ./home
-        ];
-        extraSpecialArgs = {
-          inherit inputs;
+      createHome = { hostName, system }: {
+        "brock@${hostName}" = home-manager.lib.homeManagerConfiguration {
+          pkgs = pkgs-per-system system;
+          modules = [
+            ./home
+          ];
+          extraSpecialArgs = {
+            inherit inputs;
+          };
         };
       };
-    };
 
-  in {
-    nixosConfigurations = builtins.foldl' (acc: new: acc // new) { } (lib.map createSystem systems);
-    homeConfigurations = builtins.foldl' (acc: new: acc // new) { } (lib.map createHome systems);
-  };
+      treefmtEval = treefmt-nix.lib.evalModule (pkgs-per-system system) {
+        projectRootFile = "flake.nix";
+        programs.nixfmt.enable = true;
+      };
+
+    in
+    {
+      nixosConfigurations = builtins.foldl' (acc: new: acc // new) { } (lib.map createSystem systems);
+      homeConfigurations = builtins.foldl' (acc: new: acc // new) { } (lib.map createHome systems);
+      formatter.${system} = treefmtEval.config.build.wrapper;
+    };
 }
