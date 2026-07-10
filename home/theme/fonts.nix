@@ -1,4 +1,3 @@
-{ ... }:
 {
   programs.alacritty.settings.font = {
     normal = {

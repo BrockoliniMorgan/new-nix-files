@@ -1,4 +1,3 @@
-{ lib, config, ... }:
 {
   boot.initrd.systemd.services.impermanence-btrfs = {
     wantedBy = [ "initrd.target" ];
