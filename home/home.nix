@@ -1,7 +1,6 @@
 { lib, pkgs, ... }:
 {
   wayland.windowManager.hyprland = {
-    enable = true;
     settings =
       let
         lua = lib.generators.mkLuaInline;
@@ -95,7 +94,6 @@
     '';
   };
   programs.waybar = {
-    enable = true;
     settings = {
       bar = {
         layer = "top";
@@ -116,10 +114,10 @@
       };
     };
   };
-  programs.alacritty.enable = true;
   programs.alacritty.settings.terminal.osc52 = "CopyPaste";
-  programs.bash.enable = true;
-  programs.btop.enable = true;
+  programs.bash.initExtra = ''
+    eval "$(devenv hook bash)"
+  '';
   programs.btop.settings = {
     disable_mouse = true;
     proc_aggregate = true;
@@ -130,25 +128,16 @@
     update_ms = 100;
     vim_keys = true;
   };
-  programs.home-manager.enable = true;
-  programs.qutebrowser = {
-    enable = true;
-    # Fix "unsupported browser" google login issues
-    perDomainSettings."https://accounts.google.com/*".content.headers.user_agent =
-      "Mozilla/5.0 ({os_info}; rv:135.0) Gecko/20100101 Firefox/135";
-  };
-  programs.rofi.enable = true;
-  programs.git = {
-    enable = true;
-    lfs.enable = true;
-    settings = {
-      user = {
-        name = "BrockoliniMorgan";
-        email = "brockjamesmorgan@gmail.com";
-      };
-      init.defaultBranch = "main";
-      pull.rebase = true;
+  # Fix "unsupported browser" google login issues
+  programs.qutebrowser.perDomainSettings."https://accounts.google.com/*".content.headers.user_agent =
+    "Mozilla/5.0 ({os_info}; rv:135.0) Gecko/20100101 Firefox/135";
+  programs.git.settings = {
+    user = {
+      name = "BrockoliniMorgan";
+      email = "brockjamesmorgan@gmail.com";
     };
+    init.defaultBranch = "main";
+    pull.rebase = true;
   };
 
   home = {
@@ -161,8 +150,5 @@
     username = "brock";
     homeDirectory = "/home/brock";
     stateVersion = "26.05";
-    packages = with pkgs; [
-      vesktop
-    ];
   };
 }

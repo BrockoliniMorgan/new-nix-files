@@ -52,6 +52,8 @@
         ".ssh"
         "Projects"
         ".config/vesktop"
+        ".cache/qutebrowser"
+        "Documents"
       ];
     };
   };

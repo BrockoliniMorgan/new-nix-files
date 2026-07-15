@@ -90,6 +90,9 @@
     tree
     vim
     wget
+    wl-clipboard
+    nftables
+    dnsmasq
   ];
 
   nix.settings = {
@@ -97,6 +100,16 @@
     experimental-features = [
       "nix-command"
       "flakes"
+    ];
+    trusted-substituters = [
+      "https://roar-qutrc.cachix.org"
+      "https://ros.cachix.org"
+      "https://hyprland.cachix.org"
+    ];
+    trusted-public-keys = [
+      "roar-qutrc.cachix.org-1:ZKgHZSSHH2hOAN7+83gv1gkraXze5LSEzdocPAEBNnA="
+      "ros.cachix.org-1:dSyZxI8geDCJrwgvCOHDoAfOm5sV1wCPjBkKL+38Rvo="
+      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
     ];
     warn-dirty = false;
   };
@@ -114,9 +127,9 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  # Allow for wifi forwarding to ethernet
+  networking.firewall.allowedTCPPorts = [ 53 ];
+  networking.firewall.allowedUDPPorts = [ 53 ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 

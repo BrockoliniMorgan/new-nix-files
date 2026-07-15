@@ -29,6 +29,8 @@
   languages = {
     enableFormat = true;
     enableTreesitter = true;
+    markdown.enable = true;
+    bash.enable = true;
     clang = {
       enable = true;
       cHeader = true;

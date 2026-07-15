@@ -3,6 +3,7 @@
   imports = [
     ./home.nix
     ./theme
+    ./packages.nix
     inputs.nvf.homeManagerModules.nvf
     {
       programs.nvf = {
