@@ -54,6 +54,15 @@
 
   fonts.packages = [ pkgs.nerd-fonts.martian-mono ];
 
+  hardware = {
+    enableRedistributableFirmware = true;
+    bluetooth.enable = true;
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
+  };
+
   security.wrappers.btop = {
     source = "${lib.getExe pkgs.btop}";
     capabilities = "cap_perfmon=+ep cap_dac_read_search=+ep";
