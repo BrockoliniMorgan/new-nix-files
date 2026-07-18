@@ -8,6 +8,7 @@
     mako
     tree
     vim
+    file
     wget
     wl-clipboard
     nftables
