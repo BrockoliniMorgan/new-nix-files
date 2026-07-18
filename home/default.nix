@@ -2,8 +2,9 @@
 {
   imports = [
     ./home.nix
-    ./theme
     ./packages.nix
+    ./theme
+    ./wayland
     inputs.nvf.homeManagerModules.nvf
     {
       programs.nvf = {

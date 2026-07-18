@@ -54,7 +54,13 @@
         ".config/vesktop"
         ".cache/qutebrowser"
         "Documents"
+        ".local/share/devenv"
       ];
     };
   };
+
+  # Every reboot the lecture is given, getting annoying
+  security.sudo.extraConfig = ''
+    Defaults lecture = never
+  '';
 }

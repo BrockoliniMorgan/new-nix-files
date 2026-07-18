@@ -10,23 +10,7 @@
 }:
 
 {
-  boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
-    loader = {
-      systemd-boot.enable = false;
-      grub = {
-        enable = true;
-        efiSupport = true;
-        device = "nodev";
-      };
-      efi = {
-        canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot";
-      };
-    };
-  };
-
-  networking.hostName = hostName; # Define your hostname.
+  networking.hostName = hostName;
 
   # Configure network connections interactively with nmcli or nmtui.
   networking.networkmanager.enable = true;
@@ -43,17 +27,12 @@
   # };
 
   services.displayManager.ly.enable = true;
-  programs.hyprland.enable = true;
-  programs.steam.enable = true;
   programs.ssh.startAgent = true;
-
-  # Configure keymap in X11
-  # services.xserver.xkb.layout = "us";
-  # services.xserver.xkb.options = "eurosign:e,caps:escape";
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  services.speechd.enable = lib.mkForce false;
   services.pipewire = {
     enable = true;
     pulse.enable = true;
@@ -70,30 +49,17 @@
       "dialout"
       "networkmanager"
     ];
-    hashedPasswordFile = "/persistent/passwords/user";
+    hashedPasswordFile = "/persistent/passwords/brock";
   };
 
   fonts.packages = [ pkgs.nerd-fonts.martian-mono ];
 
-  security.sudo.extraConfig = ''
-    Defaults lecture = never
-  '';
   security.wrappers.btop = {
     source = "${lib.getExe pkgs.btop}";
     capabilities = "cap_perfmon=+ep cap_dac_read_search=+ep";
     owner = "root";
     group = "root";
   };
-
-  environment.systemPackages = with pkgs; [
-    mako
-    tree
-    vim
-    wget
-    wl-clipboard
-    nftables
-    dnsmasq
-  ];
 
   nix.settings = {
     auto-optimise-store = true;
@@ -102,13 +68,9 @@
       "flakes"
     ];
     trusted-substituters = [
-      "https://roar-qutrc.cachix.org"
-      "https://ros.cachix.org"
       "https://hyprland.cachix.org"
     ];
     trusted-public-keys = [
-      "roar-qutrc.cachix.org-1:ZKgHZSSHH2hOAN7+83gv1gkraXze5LSEzdocPAEBNnA="
-      "ros.cachix.org-1:dSyZxI8geDCJrwgvCOHDoAfOm5sV1wCPjBkKL+38Rvo="
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
     ];
     warn-dirty = false;
@@ -130,13 +92,6 @@
   # Allow for wifi forwarding to ethernet
   networking.firewall.allowedTCPPorts = [ 53 ];
   networking.firewall.allowedUDPPorts = [ 53 ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # Copy the NixOS configuration file and link it from the resulting system
-  # (/run/current-system/configuration.nix). This is useful in case you
-  # accidentally delete configuration.nix.
-  # system.copySystemConfiguration = true;
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
