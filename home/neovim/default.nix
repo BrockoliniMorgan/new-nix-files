@@ -10,10 +10,12 @@
     formatOnSave = true;
     null-ls.enable = true;
   };
+  binds.whichKey.enable = true;
   visuals = {
     highlight-undo.enable = true;
     indent-blankline.enable = true;
   };
+  autocomplete.nvim-cmp.enable = true;
   telescope = {
     enable = true;
     extensions = [
@@ -32,6 +34,10 @@
     markdown.enable = true;
     bash.enable = true;
     tex.enable = true;
+    python = {
+      enable = true;
+      lsp.servers = [ "ruff" ];
+    };
     clang = {
       enable = true;
       cHeader = true;
