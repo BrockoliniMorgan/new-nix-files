@@ -13,6 +13,7 @@
   programs.git.enable = true;
   programs.git.lfs.enable = true;
   home.packages = with pkgs; [
+    bitwarden-cli
     devenv
     vesktop
   ];

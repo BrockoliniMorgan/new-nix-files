@@ -52,6 +52,7 @@
         ".ssh"
         "Projects"
         ".config/vesktop"
+        ".config/Bitwarden CLI"
         "Documents"
         ".local/share/devenv"
         ".local/share/direnv"
