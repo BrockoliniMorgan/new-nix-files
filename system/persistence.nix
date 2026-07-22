@@ -52,9 +52,10 @@
         ".ssh"
         "Projects"
         ".config/vesktop"
-        ".cache/qutebrowser"
         "Documents"
         ".local/share/devenv"
+        ".local/share/direnv"
+        ".local/share/qutebrowser/webengine"
       ];
     };
   };

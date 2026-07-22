@@ -31,6 +31,7 @@
     enableTreesitter = true;
     markdown.enable = true;
     bash.enable = true;
+    tex.enable = true;
     clang = {
       enable = true;
       cHeader = true;
