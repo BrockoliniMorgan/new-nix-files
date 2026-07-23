@@ -7,12 +7,21 @@
       in
       {
         mod._var = "SUPER";
-        monitor = {
-          output = "";
-          mode = "preferred";
-          position = "auto";
-          scale = "1";
-        };
+        monitor = [
+          {
+            output = "";
+            mode = "highres";
+            position = "auto";
+            scale = "1";
+          }
+          {
+            output = "desc:Acer Technologies KA222Q THYSA0018535 (HDMI-A-1)";
+            mode = "highres";
+            position = "auto";
+            scale = "1";
+            transform = 1;
+          }
+        ];
         config = {
           input = {
             repeat_rate = 40;
