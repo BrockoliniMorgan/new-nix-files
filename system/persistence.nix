@@ -56,6 +56,7 @@
         ".local/share/devenv"
         ".local/share/direnv"
         ".local/share/qutebrowser/webengine"
+        ".local/share/PrismLauncher"
       ];
     };
   };

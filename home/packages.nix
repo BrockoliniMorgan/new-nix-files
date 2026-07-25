@@ -12,6 +12,7 @@
   programs.rofi.enable = true;
   programs.git.enable = true;
   programs.git.lfs.enable = true;
+  programs.prismlauncher.enable = true;
   home.packages = with pkgs; [
     bitwarden-cli
     devenv
