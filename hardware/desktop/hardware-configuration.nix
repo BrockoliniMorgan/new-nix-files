@@ -28,7 +28,7 @@
   fileSystems."/" = {
     device = "/dev/mapper/cryptroot";
     fsType = "btrfs";
-    options = [ "subvol=old_roots/2026-07-23_16:07:17" ];
+    options = [ "subvol=root" ];
   };
 
   boot.initrd.luks.devices."cryptroot".device =
