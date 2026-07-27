@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs }:
 {
   bell = "visual";
   git.enable = true;
@@ -48,4 +48,16 @@
       lsp.servers = [ "nixd" ];
     };
   };
+  keymaps = [
+    {
+      key = "<leader>at";
+      mode = "n";
+      action = ''
+        function()
+          require("cmp").setup.buffer { enabled = false }
+        end
+      '';
+      lua = true;
+    }
+  ];
 }

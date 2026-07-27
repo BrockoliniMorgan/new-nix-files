@@ -26,6 +26,7 @@
           input = {
             repeat_rate = 40;
             repeat_delay = 250;
+            touchpad.disable_while_typing = false;
           };
           ecosystem.no_update_news = true;
           general = {
