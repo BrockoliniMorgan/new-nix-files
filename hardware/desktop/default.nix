@@ -1,3 +1,6 @@
 {
-  imports = [ ./no-disko.nix ./hardware-configuration.nix ];
+  imports = [
+    ./no-disko.nix
+    ./hardware-configuration.nix
+  ];
 }

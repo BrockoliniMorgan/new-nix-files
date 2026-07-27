@@ -113,8 +113,8 @@
 
     in
     {
-      nixosConfigurations = builtins.foldl' (acc: new: acc // new) { } (lib.map createSystem systems);
-      homeConfigurations = builtins.foldl' (acc: new: acc // new) { } (lib.map createHome systems);
+      nixosConfigurations = builtins.foldl' (acc: new: acc // new) { } (map createSystem systems);
+      homeConfigurations = builtins.foldl' (acc: new: acc // new) { } (map createHome systems);
       formatter.${system} = treefmtEval.config.build.wrapper;
     };
 }

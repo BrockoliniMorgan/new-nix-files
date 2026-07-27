@@ -1,4 +1,4 @@
-{ lib, ...}:
+{ lib, ... }:
 {
-  disko.devices.disk = lib.mkForce { };  
+  disko.devices.disk = lib.mkForce { };
 }
