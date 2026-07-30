@@ -5,7 +5,6 @@
 
   environment.systemPackages = with pkgs; [
     bluez
-    mako
     tree
     vim
     file

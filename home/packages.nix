@@ -13,6 +13,7 @@
   programs.git.enable = true;
   programs.git.lfs.enable = true;
   programs.prismlauncher.enable = true;
+  services.mako.enable = true;
   home.packages = with pkgs; [
     bitwarden-cli
     devenv
