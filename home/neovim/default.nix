@@ -1,6 +1,8 @@
 { pkgs }:
 {
   bell = "visual";
+  viAlias = false;
+  vimAlias = false;
   git.enable = true;
   options.autoindent = true;
   globals.mapLeader = " ";
@@ -34,6 +36,7 @@
     markdown.enable = true;
     bash.enable = true;
     tex.enable = true;
+    go.enable = true;
     python = {
       enable = true;
       lsp.servers = [ "ruff" ];
