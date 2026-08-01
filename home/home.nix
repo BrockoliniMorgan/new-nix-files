@@ -1,19 +1,8 @@
 { pkgs, ... }:
 {
-  programs.alacritty.settings.terminal.osc52 = "CopyPaste";
   programs.bash.initExtra = ''
     eval "$(devenv hook bash)"
   '';
-  programs.btop.settings = {
-    disable_mouse = true;
-    proc_aggregate = true;
-    proc_gradient = false;
-    proc_per_core = true;
-    proc_tree = true;
-    swap_disk = false;
-    update_ms = 100;
-    vim_keys = true;
-  };
   # Fix "unsupported browser" google login issues
   # :set -u https://accounts.google.com/* content.headers.user_agent "Mozilla/5.0 ({os_info}; rv:135.0) Gecko/20100101 Firefox/135"
   programs.qutebrowser.perDomainSettings."https://accounts.google.com/*".content.headers.user_agent =

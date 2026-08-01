@@ -5,12 +5,13 @@
 
   environment.systemPackages = with pkgs; [
     bluez
+    btop
+    dnsmasq
+    file
+    nftables
     tree
     vim
-    file
     wget
     wl-clipboard
-    nftables
-    dnsmasq
   ];
 }
