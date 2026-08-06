@@ -1,7 +1,7 @@
 {
   boot.initrd.systemd.services.impermanence-btrfs = {
     wantedBy = [ "initrd.target" ];
-    after = [ "systemd-cryptsetup@cryptroot.service" ];
+    requires = [ "systemd-cryptsetup@cryptroot.service" ];
     before = [ "sysroot.mount" ];
     unitConfig.DefaulDependencies = "no";
     serviceConfig.type = "oneshot";
