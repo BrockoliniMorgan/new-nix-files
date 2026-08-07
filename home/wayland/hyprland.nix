@@ -21,6 +21,13 @@
             scale = "1";
             transform = 1;
           }
+          {
+            output = "desc:Lenovo Group Limited D22-10 U1HBZ9BB (DP-1)";
+            mode = "highres";
+            position = "auto";
+            scale = "1";
+            transform = 1;
+          }
         ];
         config = {
           input = {

@@ -41,12 +41,10 @@
     }@inputs:
     let
       inherit (nixpkgs) lib;
-      allowUnfreePredicate =
-        pkg:
-        builtins.elem (lib.getName pkg) [
-          "steam"
-          "steam-unwrapped"
-        ];
+      allowUnfreePackages = [
+        "steam"
+        "steam-unwrapped"
+      ];
       overlays = [
         (import ./wrappers inputs)
       ];
@@ -54,7 +52,7 @@
         system:
         import nixpkgs {
           inherit system overlays;
-          config.allowUnfreePredicate = allowUnfreePredicate;
+          config.allowUnfreePackages = allowUnfreePackages;
         };
       system = "x86_64-linux";
       systems = [
@@ -70,13 +68,17 @@
           hostName = "desktop";
           system = "x86_64-linux";
         }
+        {
+          hostName = "nvidia-desktop";
+          system = "x86_64-linux";
+        }
       ];
       createSystem = { hostName, system }: {
         ${hostName} = lib.nixosSystem {
           inherit system;
           modules = [
             {
-              nixpkgs.config.allowUnfreePredicate = allowUnfreePredicate;
+              nixpkgs.config.allowUnfreePackages = allowUnfreePackages;
               nixpkgs.overlays = overlays;
             }
             disko.nixosModules.disko
