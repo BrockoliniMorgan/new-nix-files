@@ -28,6 +28,11 @@
       url = "github:BirdeeHub/nix-wrapper-modules";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.pre-commit-hooks.inputs.flake-compat.follows = "nvf/flake-compat";
+    };
   };
 
   outputs =
@@ -37,6 +42,7 @@
       impermanence,
       disko,
       treefmt-nix,
+      hyprland,
       ...
     }@inputs:
     let
@@ -47,6 +53,8 @@
       ];
       overlays = [
         (import ./wrappers inputs)
+        hyprland.overlays.default
+        hyprland.overlays.hyprland-packages
       ];
       pkgs-per-system =
         system:

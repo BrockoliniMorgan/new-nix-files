@@ -11,20 +11,14 @@
 
 {
   networking.hostName = hostName;
-
-  # Configure network connections interactively with nmcli or nmtui.
   networking.networkmanager.enable = true;
 
-  # Set your time zone.
-  time.timeZone = "Australia/Brisbane";
+  # Allow for wifi forwarding to ethernet
+  networking.firewall.allowedTCPPorts = [ 53 ];
+  networking.firewall.allowedUDPPorts = [ 53 ];
 
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  #   useXkbConfig = true; # use xkb.options in tty.
-  # };
+  time.timeZone = "Australia/Brisbane";
 
   services.displayManager.ly.enable = true;
   programs.ssh.startAgent = true;
@@ -43,7 +37,6 @@
 
   services.fwupd.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.brock = {
     isNormalUser = true;
     extraGroups = [
@@ -65,6 +58,7 @@
     };
   };
 
+  # Graphics card access in btop
   security.wrappers.btop = {
     source = "${lib.getExe pkgs.btop}";
     capabilities = "cap_perfmon=+ep cap_dac_read_search=+ep";
@@ -88,39 +82,9 @@
     warn-dirty = false;
   };
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
-  # Allow for wifi forwarding to ethernet
-  networking.firewall.allowedTCPPorts = [ 53 ];
-  networking.firewall.allowedUDPPorts = [ 53 ];
-
-  # This option defines the first version of NixOS you have installed on this particular machine,
-  # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
-  #
-  # Most users should NEVER change this value after the initial install, for any reason,
-  # even if you've upgraded your system to a new NixOS release.
-  #
-  # This value does NOT affect the Nixpkgs version your packages and OS are pulled from,
-  # so changing it will NOT upgrade your system - see https://nixos.org/manual/nixos/stable/#sec-upgrading for how
-  # to actually do that.
-  #
-  # This value being lower than the current NixOS release does NOT mean your system is
-  # out of date, out of support, or vulnerable.
-  #
-  # Do NOT change this value unless you have manually inspected all the changes it would make to your configuration,
-  # and migrated your data accordingly.
-  #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "26.05"; # Did you read the comment?
 
