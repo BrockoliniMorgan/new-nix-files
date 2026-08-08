@@ -52,6 +52,7 @@
         "Projects"
         ".config/vesktop"
         ".config/Bitwarden CLI"
+        ".config/kicad"
         "Documents"
         ".local/share/devenv"
         ".local/share/direnv"
