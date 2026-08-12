@@ -30,7 +30,12 @@
   programs.ssh.startAgent = true;
 
   # Enable CUPS to print documents.
-  services.printing.enable = true;
+  services.printing = {
+    enable = true;
+    drivers = with pkgs; [
+      brlaser
+    ];
+  };
 
   services.speechd.enable = lib.mkForce false;
   services.pipewire = {
