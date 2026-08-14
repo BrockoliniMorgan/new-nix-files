@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   boot = {
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
     kernelPackages = pkgs.linuxPackages_latest;
     loader = {
       systemd-boot.enable = false;

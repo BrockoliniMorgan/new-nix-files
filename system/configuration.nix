@@ -79,6 +79,10 @@
 
   nix.settings = {
     auto-optimise-store = true;
+    extra-platforms = [
+      "aarch64-linux"
+      "arm-linux"
+    ];
     experimental-features = [
       "nix-command"
       "flakes"
