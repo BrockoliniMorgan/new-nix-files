@@ -2,6 +2,7 @@
 {
   networking.networkmanager.enable = true;
   programs.arp-scan.enable = true;
+  programs.evince.enable = true;
   programs.hyprland.enable = true;
   programs.steam.enable = true;
   programs.vim.enable = true;
