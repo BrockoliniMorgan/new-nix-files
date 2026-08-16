@@ -11,12 +11,9 @@
     ./theme
     ./wayland
     inputs.nvf.homeManagerModules.nvf
-    {
-      programs.nvf = {
-        enable = true;
-        defaultEditor = true;
-        settings.vim = import ./neovim { inherit pkgs; };
-      };
-    }
   ];
+  programs.nvf = {
+    defaultEditor = true;
+    settings.vim = import ./neovim { inherit pkgs; };
+  };
 }

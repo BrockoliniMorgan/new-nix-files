@@ -12,9 +12,6 @@
 {
   networking.hostName = hostName;
 
-  # Configure network connections interactively with nmcli or nmtui.
-  networking.networkmanager.enable = true;
-
   # Set your time zone.
   time.timeZone = "Australia/Brisbane";
 
@@ -26,27 +23,14 @@
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
 
-  services.displayManager.ly.enable = true;
   programs.ssh.startAgent = true;
 
   # Enable CUPS to print documents.
-  services.printing = {
-    enable = true;
-    drivers = with pkgs; [
-      brlaser
-    ];
-  };
+  services.printing.drivers = with pkgs; [
+    brlaser
+  ];
 
   services.speechd.enable = lib.mkForce false;
-  services.pipewire = {
-    enable = true;
-    pulse.enable = true;
-  };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.libinput.enable = true;
-
-  services.fwupd.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.brock = {
@@ -87,28 +71,9 @@
       "nix-command"
       "flakes"
     ];
-    trusted-substituters = [
-      "https://hyprland.cachix.org"
-    ];
-    trusted-public-keys = [
-      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-    ];
     flake-registry = "";
     warn-dirty = false;
   };
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
 
   # Allow for wifi forwarding to ethernet
   networking.firewall.allowedTCPPorts = [ 53 ];
@@ -132,5 +97,4 @@
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "26.05"; # Did you read the comment?
-
 }
