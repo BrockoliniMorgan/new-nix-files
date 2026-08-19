@@ -11,6 +11,8 @@
 
   programs.ssh.startAgent = true;
 
+  documentation.nixos.enable = false;
+
   # Enable CUPS to print documents.
   services.printing.drivers = with pkgs; [
     brlaser
