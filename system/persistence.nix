@@ -38,6 +38,7 @@
       "/var/log"
       "/var/lib/bluetooth"
       "/var/lib/nixos"
+      "/var/lib/docker"
       "/var/lib/systemd/coredump"
       "/etc/NetworkManager/system-connections"
       "/etc/nixos"
@@ -49,6 +50,7 @@
       directories = [
         "new-nix-files"
         ".ssh"
+        ".config/sops"
         "Projects"
         ".config/vesktop"
         ".config/Bitwarden CLI"

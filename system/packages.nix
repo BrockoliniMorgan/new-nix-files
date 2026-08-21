@@ -20,6 +20,7 @@
     file
     iw
     nettools
+    sops
     tree
     usbutils
     wget

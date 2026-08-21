@@ -10,6 +10,7 @@
   i18n.defaultLocale = "en_AU.UTF-8";
 
   programs.ssh.startAgent = true;
+  virtualisation.docker.enable = true;
 
   documentation.nixos.enable = false;
 
