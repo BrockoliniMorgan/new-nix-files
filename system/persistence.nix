@@ -2,7 +2,7 @@
   boot.initrd.systemd.services.impermanence-btrfs = {
     wantedBy = [ "initrd.target" ];
     requires = [ "systemd-cryptsetup@cryptroot.service" ];
-    before = [ "sysroot.mount" ];
+    requiredBy = [ "sysroot.mount" ];
     unitConfig.DefaulDependencies = "no";
     serviceConfig.type = "oneshot";
     script = ''
@@ -38,7 +38,6 @@
       "/var/log"
       "/var/lib/bluetooth"
       "/var/lib/nixos"
-      "/var/lib/docker"
       "/var/lib/systemd/coredump"
       "/etc/NetworkManager/system-connections"
       "/etc/nixos"
@@ -50,7 +49,6 @@
       directories = [
         "new-nix-files"
         ".ssh"
-        ".config/sops"
         "Projects"
         ".config/vesktop"
         ".config/Bitwarden CLI"
