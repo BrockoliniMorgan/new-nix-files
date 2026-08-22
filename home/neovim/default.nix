@@ -30,6 +30,10 @@
   };
   options.wrap = false;
   utility.sleuth.enable = true;
+  theme = {
+    enable = true;
+    name = "onedark";
+  };
   languages = {
     enableFormat = true;
     enableTreesitter = true;
