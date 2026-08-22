@@ -5,6 +5,8 @@
   programs.evince.enable = true;
   services.pipewire.enable = true;
   services.pipewire.pulse.enable = true;
+  services.displayManager.ly.enable = true;
+  services.libinput.enable = true;
 
   documentation.nixos.enable = false;
 

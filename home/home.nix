@@ -13,11 +13,6 @@
   };
   programs.direnv.config.global.hide_env_diff = true;
 
-  services.mako.settings = {
-    default-timeout = 8000;
-    max-visible = 5;
-  };
-
   home = {
     shell.enableShellIntegration = true;
     shellAliases = {

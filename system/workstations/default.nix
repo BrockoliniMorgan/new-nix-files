@@ -4,5 +4,6 @@
     ./bluetooth.nix
     ./graphics.nix
     ./persistence.nix
+    ./projects
   ];
 }
