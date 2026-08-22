@@ -54,8 +54,8 @@
           inherit system overlays;
           config.allowUnfreePackages = allowUnfreePackages;
         };
-      system = "x86_64-linux";
-      systems = [
+      userName = "brock";
+      workstations = [
         {
           hostName = "vivobook";
           system = "x86_64-linux";
@@ -68,13 +68,16 @@
           hostName = "desktop";
           system = "x86_64-linux";
         }
+      ];
+      servers = [
         {
           hostName = "nvidia-desktop";
           system = "x86_64-linux";
         }
       ];
-      createSystem = { hostName, system }: {
-        ${hostName} = lib.nixosSystem {
+      createSystem =
+        { hostName, system }:
+        lib.nixosSystem {
           inherit system;
           modules = [
             {
@@ -93,38 +96,66 @@
                   backupFileExtension = "bkp";
                   useGlobalPkgs = true;
                   useUserPackages = true;
-                  users.brock = ./home;
+                  users.${userName} = ./home;
                   extraSpecialArgs = specialArgs;
                 };
               }
             )
           ];
           specialArgs = {
-            inherit inputs hostName;
+            inherit inputs hostName userName;
           };
         };
+      createServer = details: {
+        ${details.hostName} = createSystem details;
       };
-      createHome = { hostName, system }: {
-        "brock@${hostName}" = home-manager.lib.homeManagerConfiguration {
+      createWorkstation = details: {
+        ${details.hostName} = (createSystem details).extendModules {
+          modules = [
+            ./system/workstations
+            {
+              home-manager.users.${userName}.imports = [
+                ./home/workstations
+              ];
+            }
+          ];
+        };
+      };
+      createHome =
+        { system, ... }:
+        home-manager.lib.homeManagerConfiguration {
           pkgs = pkgs-per-system system;
           modules = [
             ./home
           ];
           extraSpecialArgs = {
-            inherit inputs;
+            inherit inputs userName;
           };
         };
+
+      createHomeWorkstation = details: {
+        "${userName}@${details.hostName}" = (createHome details).extendModules {
+          modules = [
+            ./home/workstations
+          ];
+        };
+      };
+      createHomeServer = details: {
+        "${userName}@${details.hostName}" = createHome details;
       };
 
-      treefmtEval = treefmt-nix.lib.evalModule (pkgs-per-system system) {
+      treefmtEval = treefmt-nix.lib.evalModule (pkgs-per-system "x86_64-linux") {
         projectRootFile = "flake.nix";
         programs.nixfmt.enable = true;
       };
+      applyToList = function: list: builtins.foldl' (acc: new: acc // new) { } (map function list);
 
     in
     {
-      nixosConfigurations = builtins.foldl' (acc: new: acc // new) { } (map createSystem systems);
-      homeConfigurations = builtins.foldl' (acc: new: acc // new) { } (map createHome systems);
-      formatter.${system} = treefmtEval.config.build.wrapper;
+      nixosConfigurations =
+        applyToList createWorkstation workstations // applyToList createServer servers;
+      homeConfigurations =
+        applyToList createHomeWorkstation workstations // applyToList createHomeServer servers;
+      formatter.x86_64-linux = treefmtEval.config.build.wrapper;
     };
 }

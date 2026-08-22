@@ -2,6 +2,7 @@
   lib,
   pkgs,
   hostName,
+  userName,
   ...
 }:
 {
@@ -12,8 +13,6 @@
   programs.ssh.startAgent = true;
   virtualisation.docker.enable = true;
 
-  documentation.nixos.enable = false;
-
   # Enable CUPS to print documents.
   services.printing.drivers = with pkgs; [
     brlaser
@@ -22,26 +21,17 @@
   services.speechd.enable = lib.mkForce false;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.brock = {
+  users.users.${userName} = {
     isNormalUser = true;
     extraGroups = [
       "wheel"
       "dialout"
       "networkmanager"
     ];
-    hashedPasswordFile = "/persistent/passwords/brock";
+    hashedPasswordFile = "/persistent/passwords/${userName}";
   };
 
-  fonts.packages = [ pkgs.nerd-fonts.martian-mono ];
-
-  hardware = {
-    enableRedistributableFirmware = true;
-    bluetooth.enable = true;
-    graphics = {
-      enable = true;
-      enable32Bit = true;
-    };
-  };
+  hardware.enableRedistributableFirmware = true;
 
   security.wrappers.btop = {
     source = "${lib.getExe pkgs.btop}";
@@ -71,8 +61,8 @@
   };
 
   # Allow for wifi forwarding to ethernet
-  networking.firewall.allowedTCPPorts = [ 53 ];
-  networking.firewall.allowedUDPPorts = [ 53 ];
+  # networking.firewall.allowedTCPPorts = [ 53 ];
+  # networking.firewall.allowedUDPPorts = [ 53 ];
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.

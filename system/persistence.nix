@@ -1,3 +1,4 @@
+{ userName, ... }:
 {
   boot.initrd.systemd.services.impermanence-btrfs = {
     wantedBy = [ "initrd.target" ];
@@ -45,7 +46,7 @@
     files = [
       "/etc/machine-id"
     ];
-    users.brock = {
+    users.${userName} = {
       directories = [
         "new-nix-files"
         ".ssh"
