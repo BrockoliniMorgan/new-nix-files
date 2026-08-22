@@ -2,6 +2,7 @@
 {
   inherit pkgs;
   settings = {
+    color_theme = "onedark";
     disable_mouse = true;
     proc_aggregate = true;
     proc_gradient = false;
