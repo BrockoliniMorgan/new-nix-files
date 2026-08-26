@@ -50,6 +50,7 @@
       directories = [
         "new-nix-files"
         ".ssh"
+        ".config/sops"
         "Projects"
         "Documents"
         ".local/share/devenv"
