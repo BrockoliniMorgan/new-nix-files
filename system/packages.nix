@@ -8,6 +8,7 @@
   services.printing.enable = true;
 
   environment.systemPackages = with pkgs; [
+    bat
     brightnessctl
     btop
     file
