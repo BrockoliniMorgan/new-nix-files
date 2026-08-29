@@ -8,6 +8,7 @@
   wayland.windowManager.hyprland.enable = true;
 
   home.packages = with pkgs; [
+    wineWow64Packages.stableFull
     bitwarden-cli
     kicad
     vesktop

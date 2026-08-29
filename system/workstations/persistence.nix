@@ -6,5 +6,6 @@
     ".local/share/qutebrowser/webengine"
     ".local/share/PrismLauncher"
     ".config/Bitwarden CLI"
+    ".wine"
   ];
 }
