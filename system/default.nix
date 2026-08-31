@@ -4,5 +4,6 @@
     ./persistence.nix
     ./packages.nix
     ./boot
+    ./sops.nix
   ];
 }

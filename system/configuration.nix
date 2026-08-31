@@ -3,6 +3,7 @@
   pkgs,
   hostName,
   userName,
+  config,
   ...
 }:
 {
@@ -20,6 +21,8 @@
 
   services.speechd.enable = lib.mkForce false;
 
+  sops.secrets.password.neededForUsers = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${userName} = {
     isNormalUser = true;
@@ -28,7 +31,7 @@
       "dialout"
       "networkmanager"
     ];
-    hashedPasswordFile = "/persistent/passwords/${userName}";
+    hashedPasswordFile = "${config.sops.secrets.password.path}";
   };
 
   hardware.enableRedistributableFirmware = true;

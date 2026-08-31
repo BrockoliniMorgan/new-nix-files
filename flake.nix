@@ -28,6 +28,10 @@
       url = "github:BirdeeHub/nix-wrapper-modules";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -37,6 +41,7 @@
       impermanence,
       disko,
       treefmt-nix,
+      sops-nix,
       ...
     }@inputs:
     let
@@ -87,6 +92,7 @@
             disko.nixosModules.disko
             impermanence.nixosModules.impermanence
             home-manager.nixosModules.home-manager
+            sops-nix.nixosModules.sops
             ./hardware
             ./system
             (
