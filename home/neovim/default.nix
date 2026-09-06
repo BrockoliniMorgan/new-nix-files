@@ -38,6 +38,7 @@
     enableFormat = true;
     enableTreesitter = true;
     markdown.enable = true;
+    svelte.enable = true;
     bash.enable = true;
     tex.enable = true;
     go.enable = true;
