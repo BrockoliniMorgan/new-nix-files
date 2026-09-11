@@ -4,6 +4,7 @@
   programs.prismlauncher.enable = true;
   programs.rofi.enable = true;
   programs.waybar.enable = true;
+  services.batsignal.enable = true;
   services.mako.enable = true;
   wayland.windowManager.hyprland.enable = true;
 
