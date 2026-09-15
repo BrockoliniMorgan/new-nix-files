@@ -13,6 +13,7 @@
   fonts.packages = [ pkgs.nerd-fonts.martian-mono ];
 
   environment.systemPackages = with pkgs; [
+    brave
     pwvucontrol
     wl-clipboard
 
