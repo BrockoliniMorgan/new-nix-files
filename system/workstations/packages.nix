@@ -12,5 +12,12 @@
 
   fonts.packages = [ pkgs.nerd-fonts.martian-mono ];
 
-  environment.systemPackages = with pkgs; [ wl-clipboard ];
+  environment.systemPackages = with pkgs; [
+    pwvucontrol
+    wl-clipboard
+
+    # Screenshot tools
+    grim
+    slurp
+  ];
 }
