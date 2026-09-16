@@ -85,8 +85,11 @@
     extraConfig = ''
       for i = 1, 12 do
         local key = i + 9
+        local alt_workspace = i + 12
         hl.bind(mod .. " + code:" .. key, hl.dsp.focus({workspace = i}))
         hl.bind(mod .. " + SHIFT + code:" .. key, hl.dsp.window.move({workspace = i}))
+        hl.bind(mod .. " + ALT + code:" .. key, hl.dsp.focus({workspace = alt_workspace}))
+        hl.bind(mod .. " + ALT + SHIFT + code:" .. key, hl.dsp.window.move({workspace = alt_workspace}))
       end
       local directions = {
         "left",
