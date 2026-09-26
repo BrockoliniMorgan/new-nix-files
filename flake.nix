@@ -74,6 +74,10 @@
           hostName = "nvidia-desktop";
           system = "x86_64-linux";
         }
+        {
+          hostName = "dell-server";
+          system = "x86_64-linux";
+        }
       ];
       createSystem =
         { hostName, system }:
