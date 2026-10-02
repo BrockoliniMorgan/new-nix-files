@@ -44,7 +44,9 @@
     go.enable = true;
     python = {
       enable = true;
-      lsp.servers = [ "ruff" ];
+      lsp.servers = [
+        "pyright"
+      ];
     };
     clang = {
       enable = true;
