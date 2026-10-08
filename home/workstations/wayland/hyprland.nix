@@ -76,7 +76,7 @@
           (lua ''
             function()
              hl.exec_cmd("waybar")
-             hl.exec_cmd("${lib.getExe pkgs.swaybg} -i ~/Documents/.wallpapers/wall.png")
+             hl.exec_cmd("${lib.getExe pkgs.swaybg} -i ~/Documents/.wallpapers/wall.png -m fill")
             end
           '')
         ];
