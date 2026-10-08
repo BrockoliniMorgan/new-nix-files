@@ -111,7 +111,11 @@
           };
         };
       createServer = details: {
-        ${details.hostName} = createSystem details;
+        ${details.hostName} = (createSystem details).extendModules {
+          modules = [
+            ./system/servers
+          ];
+        };
       };
       createWorkstation = details: {
         ${details.hostName} = (createSystem details).extendModules {
