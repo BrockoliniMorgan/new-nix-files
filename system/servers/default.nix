@@ -1,3 +1,7 @@
 {
-  imports = [ ./packages.nix ];
+  imports = [
+    ./packages.nix
+    ./transmission.nix
+    ./persistence.nix
+  ];
 }
