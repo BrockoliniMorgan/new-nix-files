@@ -1,11 +1,11 @@
 { lib, pkgs, ... }:
 {
-  wayland.windowManager.hyprland = {
-    settings =
-      let
-        lua = lib.generators.mkLuaInline;
-      in
-      {
+  wayland.windowManager.hyprland =
+    let
+      lua = lib.generators.mkLuaInline;
+    in
+    {
+      settings = {
         mod._var = "SUPER";
         monitor = [
           {
@@ -70,6 +70,12 @@
               (lua "hl.dsp.exec_cmd(\"${lib.getExe pkgs.qutebrowser}\")")
             ];
           }
+          {
+            _args = [
+              (lua "mod .. \" + R\"")
+              (lua "hl.dsp.submap(\"resize\")")
+            ];
+          }
         ];
         on._args = [
           "hyprland.start"
@@ -81,37 +87,71 @@
           '')
         ];
       };
-    # Just using this for functions - can do it in nix, but
-    # it's cleaner when looking at the actual lua config file
-    extraConfig = ''
-      for i = 1, 12 do
-        local key = i + 9
-        local alt_workspace = i + 12
-        hl.bind(mod .. " + code:" .. key, hl.dsp.focus({workspace = i}))
-        hl.bind(mod .. " + SHIFT + code:" .. key, hl.dsp.window.move({workspace = i}))
-        hl.bind(mod .. " + ALT + code:" .. key, hl.dsp.focus({workspace = alt_workspace}))
-        hl.bind(mod .. " + ALT + SHIFT + code:" .. key, hl.dsp.window.move({workspace = alt_workspace}))
-      end
-      local directions = {
-        "left",
-        "right",
-        "up",
-        "down",
+      submaps = {
+        resize.settings.bind = [
+          {
+            _args = [
+              (lua "\"K\"")
+              (lua "hl.dsp.window.resize({ x = \"0\", y = \"100\", relative = true})")
+            ];
+          }
+          {
+            _args = [
+              (lua "\"J\"")
+              (lua "hl.dsp.window.resize({ x = \"0\", y = \"-100\", relative = true})")
+            ];
+          }
+          {
+            _args = [
+              (lua "\"H\"")
+              (lua "hl.dsp.window.resize({ x = \"-100\", y = \"0\", relative = true})")
+            ];
+          }
+          {
+            _args = [
+              (lua "\"L\"")
+              (lua "hl.dsp.window.resize({ x = \"100\", y = \"0\", relative = true})")
+            ];
+          }
+          {
+            _args = [
+              (lua "\"escape\"")
+              (lua "hl.dsp.submap(\"\")")
+            ];
+          }
+        ];
       };
-      local vi_directions = {
-        "H",
-        "L",
-        "K",
-        "J",
-      };
-      for i = 1, 4 do
-        local vi_dir = vi_directions[i]
-        local dir = directions[i]
-        hl.bind(mod .. " + " .. dir, hl.dsp.focus({direction = dir}))
-        hl.bind(mod .. " + " .. vi_dir, hl.dsp.focus({direction = dir}))
-        hl.bind(mod .. " + SHIFT + " .. vi_dir, hl.dsp.window.move({direction = dir}))
-        hl.bind(mod .. " + SHIFT + " .. dir, hl.dsp.window.move({direction = dir}))
-      end
-    '';
-  };
+      # Just using this for functions - can do it in nix, but
+      # it's cleaner when looking at the actual lua config file
+      extraConfig = ''
+        for i = 1, 12 do
+          local key = i + 9
+          local alt_workspace = i + 12
+          hl.bind(mod .. " + code:" .. key, hl.dsp.focus({workspace = i}))
+          hl.bind(mod .. " + SHIFT + code:" .. key, hl.dsp.window.move({workspace = i}))
+          hl.bind(mod .. " + ALT + code:" .. key, hl.dsp.focus({workspace = alt_workspace}))
+          hl.bind(mod .. " + ALT + SHIFT + code:" .. key, hl.dsp.window.move({workspace = alt_workspace}))
+        end
+        local directions = {
+          "left",
+          "right",
+          "up",
+          "down",
+        };
+        local vi_directions = {
+          "H",
+          "L",
+          "K",
+          "J",
+        };
+        for i = 1, 4 do
+          local vi_dir = vi_directions[i]
+          local dir = directions[i]
+          hl.bind(mod .. " + " .. dir, hl.dsp.focus({direction = dir}))
+          hl.bind(mod .. " + " .. vi_dir, hl.dsp.focus({direction = dir}))
+          hl.bind(mod .. " + SHIFT + " .. vi_dir, hl.dsp.window.move({direction = dir}))
+          hl.bind(mod .. " + SHIFT + " .. dir, hl.dsp.window.move({direction = dir}))
+        end
+      '';
+    };
 }
