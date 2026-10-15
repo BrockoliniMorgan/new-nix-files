@@ -42,6 +42,7 @@
       "/var/lib/systemd/coredump"
       "/etc/NetworkManager/system-connections"
       "/etc/nixos"
+      "/var/lib/docker"
     ];
     files = [
       "/etc/machine-id"
