@@ -10,7 +10,6 @@
   environment.systemPackages = with pkgs; [
     bat
     brightnessctl
-    btop
     file
     iw
     nettools

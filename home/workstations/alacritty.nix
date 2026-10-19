@@ -1,7 +1,5 @@
-{ pkgs }:
 {
-  inherit pkgs;
-  settings = {
+  programs.alacritty.settings = {
     terminal.osc52 = "CopyPaste";
     font = {
       normal = {

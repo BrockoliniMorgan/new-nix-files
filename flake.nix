@@ -24,10 +24,6 @@
       url = "github:notashelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-wrapper-modules = {
-      url = "github:BirdeeHub/nix-wrapper-modules";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -45,13 +41,10 @@
         "steam"
         "steam-unwrapped"
       ];
-      overlays = [
-        (import ./wrappers inputs)
-      ];
       pkgs-per-system =
         system:
         import nixpkgs {
-          inherit system overlays;
+          inherit system;
           config.allowUnfreePackages = allowUnfreePackages;
         };
       userName = "brock";
@@ -86,7 +79,6 @@
           modules = [
             {
               nixpkgs.config.allowUnfreePackages = allowUnfreePackages;
-              nixpkgs.overlays = overlays;
             }
             disko.nixosModules.disko
             impermanence.nixosModules.impermanence
