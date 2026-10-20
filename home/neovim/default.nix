@@ -17,7 +17,7 @@
     highlight-undo.enable = true;
     indent-blankline.enable = true;
   };
-  autocomplete.nvim-cmp.enable = true;
+  # autocomplete.nvim-cmp.enable = true;
   telescope = {
     enable = true;
     extensions = [
