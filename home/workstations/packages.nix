@@ -11,7 +11,6 @@
   home.packages = with pkgs; [
     libreoffice
     wineWow64Packages.stableFull
-    bitwarden-cli
     kicad
     vesktop
   ];

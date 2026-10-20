@@ -7,7 +7,6 @@
     ".config/BraveSoftware/Brave-Browser"
     ".local/share/PrismLauncher"
     ".local/share/Steam"
-    ".config/Bitwarden CLI"
     ".wine"
   ];
 }
