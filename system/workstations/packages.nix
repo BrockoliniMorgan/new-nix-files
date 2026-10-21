@@ -1,6 +1,8 @@
 { pkgs, ... }:
 {
   programs.hyprland.enable = true;
+  programs.hyprland.xwayland.enable = false;
+  programs.hyprland.withUWSM = false;
   programs.steam.enable = true;
   programs.evince.enable = true;
   services.pipewire.enable = true;

@@ -37,6 +37,9 @@
     }@inputs:
     let
       inherit (nixpkgs) lib;
+      overlays = [
+        (import ./overrides)
+      ];
       allowUnfreePackages = [
         "steam"
         "steam-unwrapped"
@@ -44,7 +47,7 @@
       pkgs-per-system =
         system:
         import nixpkgs {
-          inherit system;
+          inherit system overlays;
           config.allowUnfreePackages = allowUnfreePackages;
         };
       userName = "brock";
@@ -78,7 +81,10 @@
           inherit system;
           modules = [
             {
-              nixpkgs.config.allowUnfreePackages = allowUnfreePackages;
+              nixpkgs = {
+                inherit overlays;
+                config.allowUnfreePackages = allowUnfreePackages;
+              };
             }
             disko.nixosModules.disko
             impermanence.nixosModules.impermanence

@@ -60,6 +60,8 @@
     warn-dirty = false;
   };
 
+  zramSwap.enable = true;
+
   # Allow for wifi forwarding to ethernet
   # networking.firewall.allowedTCPPorts = [ 53 ];
   # networking.firewall.allowedUDPPorts = [ 53 ];
