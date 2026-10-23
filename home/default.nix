@@ -7,6 +7,7 @@
   imports = [
     ./home.nix
     ./packages.nix
+    ./tmux.nix
     inputs.nvf.homeManagerModules.nvf
   ];
   programs.nvf = {
