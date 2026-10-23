@@ -1,15 +1,5 @@
 final: prev: {
-  alacritty = prev.alacritty.overrideAttrs (
-    {
-      buildFeatures ? [ ],
-      ...
-    }:
-    {
-      buildFeatures = buildFeatures ++ [
-        "--features=wayland"
-      ];
-    }
-  );
+  alacritty = final.callPackage ./alacritty.nix { };
   hyprland = prev.hyprland.overrideAttrs (
     {
       env,
@@ -40,5 +30,12 @@ final: prev: {
     sndioSupport = false;
     mpdSupport = false;
   };
+  # mako = prev.mako.override {
+  #   withFishCompletions = false;
+  #   withZshCompletions = false;
+  # };
   # systemd = prev.systemd.override { withBootloader = false; };
+  ly = prev.ly.override {
+    x11Support = false;
+  };
 }
