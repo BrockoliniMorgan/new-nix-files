@@ -22,5 +22,23 @@ final: prev: {
     }
   );
   rofi-unwrapped = prev.rofi-unwrapped.override { x11Support = false; };
+  tree = prev.tree.overrideAttrs (
+    {
+      makeFlags ? [ ],
+      ...
+    }:
+    {
+      makeFlags = makeFlags ++ [ "CFLAGS=-Os" ];
+    }
+  );
+  waybar = prev.waybar.override {
+    niriSupport = false;
+    cavaSupport = false;
+    jackSupport = false;
+    pulseSupport = false;
+    pipewireSupport = false;
+    sndioSupport = false;
+    mpdSupport = false;
+  };
   # systemd = prev.systemd.override { withBootloader = false; };
 }
