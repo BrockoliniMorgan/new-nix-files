@@ -21,4 +21,6 @@ final: prev: {
       };
     }
   );
+  rofi-unwrapped = prev.rofi-unwrapped.override { x11Support = false; };
+  # systemd = prev.systemd.override { withBootloader = false; };
 }

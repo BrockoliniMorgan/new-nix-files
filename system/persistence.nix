@@ -41,8 +41,8 @@
       "/var/lib/nixos"
       "/var/lib/systemd/coredump"
       "/etc/NetworkManager/system-connections"
-      "/etc/nixos"
       "/var/lib/docker"
+      "/etc/ssh/"
     ];
     files = [
       "/etc/machine-id"

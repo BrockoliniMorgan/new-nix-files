@@ -13,5 +13,6 @@
     wineWow64Packages.stableFull
     kicad
     vesktop
+    # dorion
   ];
 }
