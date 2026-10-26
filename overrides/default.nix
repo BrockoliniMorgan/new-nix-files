@@ -30,10 +30,10 @@ final: prev: {
     sndioSupport = false;
     mpdSupport = false;
   };
-  # mako = prev.mako.override {
-  #   withFishCompletions = false;
-  #   withZshCompletions = false;
-  # };
+  mako = prev.mako.override {
+    withFishCompletions = false;
+    withZshCompletions = false;
+  };
   # systemd = prev.systemd.override { withBootloader = false; };
   ly = prev.ly.override {
     x11Support = false;
