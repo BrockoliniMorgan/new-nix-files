@@ -1,6 +1,6 @@
 final: prev: {
   alacritty = final.callPackage ./alacritty.nix { };
-  hyprland = prev.hyprland.overrideAttrs (
+  hyprland = (prev.hyprland.override { withUWSM = false; }).overrideAttrs (
     {
       env,
       ...

@@ -7,6 +7,8 @@
   services.batsignal.enable = true;
   services.mako.enable = true;
   wayland.windowManager.hyprland.enable = true;
+  wayland.windowManager.hyprland.package = null;
+  wayland.windowManager.hyprland.portalPackage = null;
 
   home.packages = with pkgs; [
     libreoffice
