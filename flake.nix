@@ -50,33 +50,20 @@
           inherit system overlays;
           config.allowUnfreePackages = allowUnfreePackages;
         };
+
       userName = "brock";
-      workstations = [
-        {
-          hostName = "vivobook";
-          system = "x86_64-linux";
-        }
-        {
-          hostName = "thinkpad";
-          system = "x86_64-linux";
-        }
-        {
-          hostName = "desktop";
-          system = "x86_64-linux";
-        }
-      ];
-      servers = [
-        {
-          hostName = "nvidia-desktop";
-          system = "x86_64-linux";
-        }
-        {
-          hostName = "dell-server";
-          system = "x86_64-linux";
-        }
-      ];
+      workstations = {
+        vivobook = "x86_64-linux";
+        thinkpad = "x86_64-linux";
+        desktop = "x86_64-linux";
+      };
+      servers = {
+        nvidia-desktop = "x86_64-linux";
+        dell-server = "x86_64-linux";
+      };
+
       createSystem =
-        { hostName, system }:
+        hostName: system:
         lib.nixosSystem {
           inherit system;
           modules = [
@@ -98,7 +85,7 @@
                   backupFileExtension = "bkp";
                   useGlobalPkgs = true;
                   useUserPackages = true;
-                  users.${userName} = ./home;
+                  users.${specialArgs.userName} = ./home;
                   extraSpecialArgs = specialArgs;
                 };
               }
@@ -108,15 +95,16 @@
             inherit inputs hostName userName;
           };
         };
-      createServer = details: {
-        ${details.hostName} = (createSystem details).extendModules {
+
+      createServer = hostName: system: {
+        ${hostName} = (createSystem hostName system).extendModules {
           modules = [
             ./system/servers
           ];
         };
       };
-      createWorkstation = details: {
-        ${details.hostName} = (createSystem details).extendModules {
+      createWorkstation = hostName: system: {
+        ${hostName} = (createSystem hostName system).extendModules {
           modules = [
             ./system/workstations
             {
@@ -127,8 +115,9 @@
           ];
         };
       };
+
       createHome =
-        { system, ... }:
+        hostName: system:
         home-manager.lib.homeManagerConfiguration {
           pkgs = pkgs-per-system system;
           modules = [
@@ -139,29 +128,29 @@
           };
         };
 
-      createHomeWorkstation = details: {
-        "${userName}@${details.hostName}" = (createHome details).extendModules {
+      createHomeWorkstation = hostName: system: {
+        "${userName}@${hostName}" = (createHome hostName system).extendModules {
           modules = [
             ./home/workstations
           ];
         };
       };
-      createHomeServer = details: {
-        "${userName}@${details.hostName}" = createHome details;
+      createHomeServer = hostName: system: {
+        "${userName}@${hostName}" = createHome hostName system;
       };
 
       treefmtEval = treefmt-nix.lib.evalModule (pkgs-per-system "x86_64-linux") {
         projectRootFile = "flake.nix";
         programs.nixfmt.enable = true;
       };
-      applyToList = function: list: builtins.foldl' (acc: new: acc // new) { } (map function list);
-
     in
     {
       nixosConfigurations =
-        applyToList createWorkstation workstations // applyToList createServer servers;
+        with lib.attrsets;
+        concatMapAttrs createWorkstation workstations // concatMapAttrs createServer servers;
       homeConfigurations =
-        applyToList createHomeWorkstation workstations // applyToList createHomeServer servers;
+        with lib.attrsets;
+        concatMapAttrs createHomeWorkstation workstations // concatMapAttrs createHomeServer servers;
       formatter.x86_64-linux = treefmtEval.config.build.wrapper;
     };
 }
