@@ -116,29 +116,6 @@
         };
       };
 
-      createHome =
-        hostName: system:
-        home-manager.lib.homeManagerConfiguration {
-          pkgs = pkgs-per-system system;
-          modules = [
-            ./home
-          ];
-          extraSpecialArgs = {
-            inherit inputs userName;
-          };
-        };
-
-      createHomeWorkstation = hostName: system: {
-        "${userName}@${hostName}" = (createHome hostName system).extendModules {
-          modules = [
-            ./home/workstations
-          ];
-        };
-      };
-      createHomeServer = hostName: system: {
-        "${userName}@${hostName}" = createHome hostName system;
-      };
-
       treefmtEval = treefmt-nix.lib.evalModule (pkgs-per-system "x86_64-linux") {
         projectRootFile = "flake.nix";
         programs.nixfmt.enable = true;
@@ -148,9 +125,7 @@
       nixosConfigurations =
         with lib.attrsets;
         concatMapAttrs createWorkstation workstations // concatMapAttrs createServer servers;
-      homeConfigurations =
-        with lib.attrsets;
-        concatMapAttrs createHomeWorkstation workstations // concatMapAttrs createHomeServer servers;
+
       formatter.x86_64-linux = treefmtEval.config.build.wrapper;
     };
 }

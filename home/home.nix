@@ -28,7 +28,6 @@
     shell.enableShellIntegration = true;
     shellAliases = {
       nrsf = "sudo nixos-rebuild switch --flake ~/new-nix-files";
-      hmsf = "${pkgs.home-manager}/bin/home-manager switch --flake ~/new-nix-files -b bkp";
       ngc = "sudo nix-collect-garbage -d && nix-collect-garbage -d";
     };
     username = userName;
