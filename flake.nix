@@ -58,8 +58,14 @@
         desktop = "x86_64-linux";
       };
       servers = {
-        nvidia-desktop = "x86_64-linux";
-        dell-server = "x86_64-linux";
+        nvidia-desktop = {
+          system = "x86_64-linux";
+          type = [ "media" ];
+        };
+        dell-server = {
+          system = "x86_64-linux";
+          type = [ "media" ];
+        };
       };
 
       createSystem =
@@ -96,10 +102,13 @@
           };
         };
 
-      createServer = hostName: system: {
+      createServer = hostName: { system, type }: {
         ${hostName} = (createSystem hostName system).extendModules {
           modules = [
             ./system/servers
+            {
+              server = { inherit type; };
+            }
           ];
         };
       };
