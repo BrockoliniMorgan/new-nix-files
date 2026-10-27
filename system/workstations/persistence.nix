@@ -4,7 +4,7 @@
     ".config/vesktop"
     ".config/kicad"
     ".local/share/qutebrowser/webengine"
-    ".config/BraveSoftware/Brave-Browser"
+    ".config/BraveSoftware"
     ".local/share/PrismLauncher"
     ".local/share/Steam"
     ".wine"
