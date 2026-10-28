@@ -1,14 +1,20 @@
-final: prev: {
+final: prev:
+let
+  inherit (prev) lib;
+in
+{
   alacritty = final.callPackage ./alacritty.nix { };
   hyprland = (prev.hyprland.override { withUWSM = false; }).overrideAttrs (
     {
-      env,
+      env ? { },
+      cmakeFlags ? [ ],
       ...
     }:
     {
       env = env // {
         NIX_CFLAGS_COMPILE = (env.NIX_CFLAGS_COMPILE or "") + " -Os";
       };
+      cmakeFlags = cmakeFlags ++ [ (lib.cmakeBool "NO_HYPRPM" true) ];
     }
   );
   rofi-unwrapped = prev.rofi-unwrapped.override { x11Support = false; };
