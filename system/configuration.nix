@@ -21,14 +21,17 @@
   services.speechd.enable = lib.mkForce false;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.${userName} = {
-    isNormalUser = true;
-    extraGroups = [
-      "wheel"
-      "dialout"
-      "networkmanager"
-    ];
-    hashedPasswordFile = "/persistent/passwords/${userName}";
+  users = {
+    mutableUsers = false;
+    users.${userName} = {
+      isNormalUser = true;
+      extraGroups = [
+        "wheel"
+        "dialout"
+        "networkmanager"
+      ];
+      hashedPasswordFile = "/persistent/passwords/${userName}";
+    };
   };
 
   hardware.enableRedistributableFirmware = true;
