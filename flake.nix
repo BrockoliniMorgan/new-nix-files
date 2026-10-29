@@ -73,32 +73,18 @@
         lib.nixosSystem {
           inherit system;
           modules = [
-            {
-              nixpkgs = {
-                inherit overlays;
-                config.allowUnfreePackages = allowUnfreePackages;
-              };
-            }
             disko.nixosModules.disko
             impermanence.nixosModules.impermanence
             home-manager.nixosModules.home-manager
             ./hardware
             ./system
-            (
-              { specialArgs, ... }:
-              {
-                home-manager = {
-                  backupFileExtension = "bkp";
-                  useGlobalPkgs = true;
-                  useUserPackages = true;
-                  users.${specialArgs.userName} = ./home;
-                  extraSpecialArgs = specialArgs;
-                };
-              }
-            )
+            ./home/nixos-home.nix
           ];
           specialArgs = {
             inherit inputs hostName userName;
+            nixpkgsConf = {
+              inherit overlays allowUnfreePackages;
+            };
           };
         };
 
@@ -116,11 +102,7 @@
         ${hostName} = (createSystem hostName system).extendModules {
           modules = [
             ./system/workstations
-            {
-              home-manager.users.${userName}.imports = [
-                ./home/workstations
-              ];
-            }
+            ./home/workstations/nixos-home.nix
           ];
         };
       };
