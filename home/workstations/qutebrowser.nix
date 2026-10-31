@@ -6,5 +6,6 @@
     perDomainSettings."https://accounts.google.com/*".content.headers.user_agent =
       "Mozilla/5.0 ({os_info}; rv:135.0) Gecko/20100101 Firefox/135";
     settings.content.blocking.method = "adblock";
+    settings.colors.webpage.darkmode.enabled = true;
   };
 }
