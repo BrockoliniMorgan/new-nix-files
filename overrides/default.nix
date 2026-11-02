@@ -18,13 +18,18 @@ in
     }
   );
   rofi-unwrapped = prev.rofi-unwrapped.override { x11Support = false; };
-  tree = prev.tree.overrideAttrs (
+  tree = prev.pkgsStatic.tree.overrideAttrs (
     {
       makeFlags ? [ ],
+      env ? { },
       ...
     }:
     {
       makeFlags = makeFlags ++ [ "CFLAGS=-Os" ];
+
+      # Important for static pkgs - reduced binary size from 95K with
+      # dynamic linking or 165K with static linking to 81K
+      env.NIX_CFLAGS_COMPILE = (env.NIX_CFLAGS_COMPILE or "") + " -flto";
     }
   );
   waybar = prev.waybar.override {
@@ -39,6 +44,7 @@ in
   mako = prev.mako.override {
     withFishCompletions = false;
     withZshCompletions = false;
+    systemdMinimal = final.systemdLibs;
   };
   # systemd = prev.systemd.override { withBootloader = false; };
   ly = prev.ly.override {
