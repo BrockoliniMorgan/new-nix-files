@@ -18,4 +18,9 @@
     flake-registry = "";
     warn-dirty = false;
   };
+  nix.optimise = {
+    automatic = true;
+    dates = "daily";
+  };
+
 }
