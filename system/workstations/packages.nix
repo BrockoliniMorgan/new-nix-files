@@ -2,7 +2,6 @@
 {
   programs.hyprland.enable = true;
   programs.steam.enable = true;
-  programs.evince.enable = true;
   services.pipewire.enable = true;
   services.pipewire.pulse.enable = true;
   services.displayManager.ly.enable = true;

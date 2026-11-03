@@ -3,6 +3,7 @@
   programs.alacritty.enable = true;
   programs.prismlauncher.enable = true;
   programs.rofi.enable = true;
+  programs.zathura.enable = true;
   programs.waybar.enable = true;
   services.batsignal.enable = true;
   services.mako.enable = true;

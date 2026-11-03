@@ -50,4 +50,19 @@ in
   ly = prev.ly.override {
     x11Support = false;
   };
+  # pipewire = prev.pipewire.override { x11Support = false; };
+  xdg-desktop-portal-gtk = prev.xdg-desktop-portal-gtk.overrideAttrs (
+    {
+      mesonFlags ? [ ],
+      buildInputs ? [ ],
+      ...
+    }:
+    {
+      mesonFlags = mesonFlags ++ [
+        (lib.mesonEnable "wallpaper" false)
+        (lib.mesonEnable "settings" false)
+      ];
+      buildInputs = lib.remove "gsettings-desktop-schemas" (lib.remove "gnome-desktop" buildInputs);
+    }
+  );
 }
