@@ -65,4 +65,23 @@ in
       buildInputs = lib.remove "gsettings-desktop-schemas" (lib.remove "gnome-desktop" buildInputs);
     }
   );
+  vim = prev.pkgsStatic.vim.overrideAttrs (
+    {
+      env ? { },
+      ...
+    }:
+    {
+      env.NIX_CFLAGS_COMPILE = (env.NIX_CFLAGS_COMPILE or "") + " -Os -flto";
+    }
+  );
+  # Causes a kernel rebuild
+  # rsync = prev.pkgsStatic.rsync.overrideAttrs (
+  #   {
+  #     env ? { },
+  #     ...
+  #   }:
+  #   {
+  #     env.NIX_CFLAGS_COMPILE = (env.NIX_CFLAGS_COMPILE or "") + " -Os -flto";
+  #   }
+  # );
 }
