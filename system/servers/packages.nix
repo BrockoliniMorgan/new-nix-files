@@ -1,2 +1,3 @@
 {
+  server.enable = true;
 }

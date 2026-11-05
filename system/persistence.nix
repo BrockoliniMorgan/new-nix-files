@@ -49,7 +49,7 @@
     ];
     users.${userName} = {
       directories = [
-        "new-nix-files"
+        "nix-config"
         ".ssh"
         ".config/sops"
         "Projects"

@@ -5,5 +5,6 @@
     ./persistence.nix
     ./tor.nix
     ./pihole.nix
+    ./harmonia.nix
   ];
 }

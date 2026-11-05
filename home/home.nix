@@ -27,7 +27,7 @@
   home = {
     shell.enableShellIntegration = true;
     shellAliases = {
-      nrsf = "sudo nixos-rebuild switch --flake ~/new-nix-files";
+      nrsf = "sudo nixos-rebuild switch --flake ~/nix-config";
       ngc = "sudo nix-collect-garbage -d && nix-collect-garbage -d";
     };
     username = userName;

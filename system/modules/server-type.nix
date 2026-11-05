@@ -12,15 +12,18 @@ in
           lib.types.enum [
             "media"
             "dns"
+            "nix-cache"
           ]
         );
       };
     };
   };
   config = lib.mkIf cfg.enable {
-    services.tor.enable = lib.mkIf (builtins.elem "media" cfg.type);
-    services.transmission.enable = lib.mkIf (builtins.elem "media" cfg.type);
-    services.pihole-ftl.enable = lib.mkIf (builtins.elem "dns" cfg.type);
-    services.pihole-web.enable = lib.mkIf (builtins.elem "dns" cfg.type);
+    services.tor.enable = builtins.elem "media" cfg.type;
+    services.transmission.enable = builtins.elem "media" cfg.type;
+    services.pihole-ftl.enable = builtins.elem "dns" cfg.type;
+    services.pihole-web.enable = builtins.elem "dns" cfg.type;
+    services.harmonia.cache.enable = builtins.elem "nix-cache" cfg.type;
+    systemd.services.cloudflared-tunnel.enable = builtins.elem "nix-cache" cfg.type;
   };
 }

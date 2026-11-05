@@ -12,8 +12,12 @@
     substituters = [
       "https://nix-community.cachix.org"
     ];
+    trusted-substituters = [
+      "https://cache.brockjmorgan.dev"
+    ];
     trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "cache.brockjmorgan.dev-1:QMXekPjjwVykyLq0S9E60Tw/bvtoFuuh1AlESybamP0="
     ];
     flake-registry = "";
     warn-dirty = false;

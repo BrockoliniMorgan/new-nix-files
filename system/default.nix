@@ -5,6 +5,7 @@
         ./packages.nix
         ./nixpkgs-config.nix
         ./nix-settings.nix
+        ./sops.nix
         ./boot
         ./modules
     ];

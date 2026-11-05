@@ -24,6 +24,10 @@
       url = "github:notashelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -33,11 +37,13 @@
       impermanence,
       disko,
       treefmt-nix,
+      sops-nix,
       ...
     }@inputs:
     let
       inherit (nixpkgs) lib;
       overlays = [
+        sops-nix.overlays.default
         (import ./overrides)
       ];
       allowUnfreePackages = [
@@ -60,7 +66,10 @@
       servers = {
         nvidia-desktop = {
           system = "x86_64-linux";
-          type = [ "media" ];
+          type = [
+            "media"
+            "nix-cache"
+          ];
         };
         dell-server = {
           system = "x86_64-linux";
@@ -76,6 +85,7 @@
             disko.nixosModules.disko
             impermanence.nixosModules.impermanence
             home-manager.nixosModules.home-manager
+            sops-nix.nixosModules.sops
             ./hardware
             ./system
             ./home/nixos-home.nix
@@ -119,4 +129,7 @@
 
       formatter.x86_64-linux = treefmtEval.config.build.wrapper;
     };
+  nixConfig = {
+    extra-substituters = [ "https://cache.brockjmorgan.dev" ];
+  };
 }
