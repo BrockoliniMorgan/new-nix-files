@@ -46,11 +46,11 @@ in
     withZshCompletions = false;
     systemdMinimal = final.systemdLibs;
   };
-  # systemd = prev.systemd.override { withBootloader = false; };
+  systemd = prev.systemd.override { withBootloader = false; };
   ly = prev.ly.override {
     x11Support = false;
   };
-  # pipewire = prev.pipewire.override { x11Support = false; };
+  pipewire = prev.pipewire.override { x11Support = false; };
   xdg-desktop-portal-gtk = prev.xdg-desktop-portal-gtk.overrideAttrs (
     {
       mesonFlags ? [ ],
@@ -74,14 +74,14 @@ in
       env.NIX_CFLAGS_COMPILE = (env.NIX_CFLAGS_COMPILE or "") + " -Os -flto";
     }
   );
-  # Causes a kernel rebuild
-  # rsync = prev.pkgsStatic.rsync.overrideAttrs (
-  #   {
-  #     env ? { },
-  #     ...
-  #   }:
-  #   {
-  #     env.NIX_CFLAGS_COMPILE = (env.NIX_CFLAGS_COMPILE or "") + " -Os -flto";
-  #   }
-  # );
+  rsync = prev.pkgsStatic.rsync.overrideAttrs (
+    {
+      env ? { },
+      ...
+    }:
+    {
+      env.NIX_CFLAGS_COMPILE = (env.NIX_CFLAGS_COMPILE or "") + " -Os -flto";
+    }
+  );
+  bat = prev.pkgsStatic.bat;
 }
